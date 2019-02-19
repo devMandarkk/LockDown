@@ -25,6 +25,6 @@ public:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UStaticMeshComponent * mesh;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	//UStaticMeshComponent * mesh;
 };

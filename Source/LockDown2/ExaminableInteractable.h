@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "WorldInteractable.h"
+#include "GameFramework/Actor.h"
+#include "Camera/CameraComponent.h"
 #include "ExaminableInteractable.generated.h"
 
 /**
@@ -17,12 +19,34 @@ class LOCKDOWN2_API AExaminableInteractable : public AWorldInteractable
 public:
 	AExaminableInteractable();
 
-	UFUNCTION(BlueprintCallable)
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* MyMesh;
+
+	UPROPERTY(EditAnywhere)
+		USceneComponent* HoldingComp;
+
+	UFUNCTION()
+		void RotateActor();
+
+	UFUNCTION()
+		void Pickup();
+
+	bool bHolding;
+	bool bGravity;
+
+	FRotator ControlRotation;
+	ACharacter* MyCharacter;
+	UCameraComponent* PlayerCamera;
+	FVector ForwardVector;
+
+	virtual void Tick(float DeltaTime) override;
+
 	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 
-	UFUNCTION(BlueprintCallable)
 	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
 protected:
+
+	virtual void BeginPlay() override;
 
 };
