@@ -54,6 +54,9 @@ public:
 	float PitchMax;
 	float PitchMin;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FString CurrentSelectedItem; //this is being picked up by the HUD
+
 	FVector HoldingComp;
 	FRotator LastRotation;
 

@@ -31,9 +31,13 @@ public:
 	bool isOpen;
 
 	UPROPERTY(EditAnywhere)
+	bool IsLocked;
+
+	UPROPERTY(EditAnywhere)
 	class ARegularDoor* RegularDoor;
 
 	void OnInteract();
+	void UnlockDoor();
 
 protected:
 

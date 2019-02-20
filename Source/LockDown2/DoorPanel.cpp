@@ -32,15 +32,20 @@ void ADoorPanel::BeginPlay()
 }
 void ADoorPanel::OnInteract()
 {
-	if (RegularDoor) {
-		//UE_LOG(LogTemp, Warning, TEXT("Time To Toggle Door"));
-		isOpen = !isOpen;
-		RegularDoor->ToggleDoor();
+	if (!IsLocked) {
+		if (RegularDoor) {
+			//UE_LOG(LogTemp, Warning, TEXT("Time To Toggle Door"));
+			isOpen = !isOpen;
+			RegularDoor->ToggleDoor();
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("No Door associated with panel"));
+		}
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("No Door associated with panel"));
-
+		UE_LOG(LogTemp, Warning, TEXT("Door is locked!"));
 	}
+
 }
 
 
@@ -48,4 +53,9 @@ void ADoorPanel::OnInteract()
 void ADoorPanel::Tick(float DeltaTime)
 {
 
+}
+void ADoorPanel::UnlockDoor(){
+	UE_LOG(LogTemp, Warning, TEXT("Door Unlocked from Door Panel"));
+
+	IsLocked = false;
 }

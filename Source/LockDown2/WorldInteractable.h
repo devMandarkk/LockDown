@@ -23,6 +23,10 @@ public:
 	
 	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
+
+	UPROPERTY(EditAnywhere)
+	FString ItemName;
+
 protected:
 	virtual void Tick(float DeltaTime) override;
 

@@ -56,6 +56,7 @@ ALockDown2Character::ALockDown2Character()
 	//Initialize all interactables as null here
 	CurrentItem = NULL;
 	DoorPanel = NULL;
+	CurrentSelectedItem = "";
 
 	bCanMove = true;
 	bInspecting = false;
@@ -82,6 +83,11 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 
 	if (!bHoldingItem) {
 		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
+			if (Hit.GetActor()->GetClass()->IsChildOf(AWorldInteractable::StaticClass())) {
+				CurrentSelectedItem = Cast<AWorldInteractable>(Hit.GetActor())->ItemName;
+				UE_LOG(LogTemp, Warning, TEXT("Hovering over a world item %s"), *CurrentSelectedItem);
+
+			}
 			if (Hit.GetActor()->GetClass()->IsChildOf(AExaminableInteractable::StaticClass())) {
 				CurrentItem = Cast <AExaminableInteractable>(Hit.GetActor());
 				//currentSelectedItem = CurrentItem->GetName();
@@ -101,8 +107,7 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 
 		}
 		else {
-			//currentSelectedItem = "";
-
+			CurrentSelectedItem = "";
 			CurrentItem = NULL;
 			DoorPanel = NULL;
 
