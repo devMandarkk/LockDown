@@ -20,3 +20,9 @@ void AWorldInteractable::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 	UE_LOG(LogTemp, Warning, TEXT("OnOverlapEnd - AWorldInteractable"));
 
 }
+
+void AWorldInteractable::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}

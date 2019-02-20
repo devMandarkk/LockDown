@@ -24,6 +24,7 @@ public:
 	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
 protected:
+	virtual void Tick(float DeltaTime) override;
 
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	//UStaticMeshComponent * mesh;

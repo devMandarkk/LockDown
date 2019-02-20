@@ -12,6 +12,7 @@
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 #include "ExaminableInteractable.h"
+#include "DoorPanel.h"
 #include "DrawDebugHelpers.h"
 
 
@@ -52,7 +53,9 @@ ALockDown2Character::ALockDown2Character()
 
 	HoldingComponent->SetupAttachment(Mesh1P);
 
+	//Initialize all interactables as null here
 	CurrentItem = NULL;
+	DoorPanel = NULL;
 
 	bCanMove = true;
 	bInspecting = false;
@@ -75,7 +78,7 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 	ForwardVector = FirstPersonCameraComponent->GetForwardVector();
 	End = (ForwardVector * 200.0f) + Start;
 
-	DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
+	//DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 1, 0, 1);
 
 	if (!bHoldingItem) {
 		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
@@ -83,16 +86,16 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 				CurrentItem = Cast <AExaminableInteractable>(Hit.GetActor());
 				//currentSelectedItem = CurrentItem->GetName();
 			}
+			if (Hit.GetActor()->GetClass()->IsChildOf(ADoorPanel::StaticClass())) {
+				DoorPanel = Cast <ADoorPanel>(Hit.GetActor());
+				//currentSelectedItem = (FString)doorPanel->name;
+			}			
 			//if (Hit.GetActor()->GetClass()->IsChildOf(ADrinkMachine::StaticClass())) {
 			//	//Cast <ADrinkMachine>(Hit.GetActor())->OnHoverOver();
 			//	drinkMachine = Cast <ADrinkMachine>(Hit.GetActor());
 			//	currentSelectedItem = (FString)drinkMachine->name;
 			//}
-			//if (Hit.GetActor()->GetClass()->IsChildOf(ADoorPanel::StaticClass())) {
-			//	doorPanel = Cast <ADoorPanel>(Hit.GetActor());
-			//	currentSelectedItem = (FString)doorPanel->name;
 
-			//}
 
 			//UE_LOG(LogTemp, Warning, TEXT(currentSelectedItem));
 
@@ -101,8 +104,9 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 			//currentSelectedItem = "";
 
 			CurrentItem = NULL;
+			DoorPanel = NULL;
+
 			//drinkMachine = NULL;
-			//doorPanel = NULL;
 		}
 	}
 
@@ -135,12 +139,13 @@ void ALockDown2Character::OnAction()
 		ToggleItemPickup();
 
 	}
+	if (DoorPanel && !bInspecting) {
+		DoorPanel->OnInteract();
+	}
 	//if (drinkMachine && !bInspecting) {
 	//	drinkMachine->OnInteract();
 	//}
-	//if (doorPanel && !bInspecting) {
-	//	doorPanel->OnInteract();
-	//}
+
 }
 
 void ALockDown2Character::OnInspect()
