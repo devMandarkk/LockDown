@@ -6,15 +6,18 @@
 
 ADoorLockPanel::ADoorLockPanel() {
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
-	mesh->SetupAttachment(boxTrigger);
+	mesh->SetupAttachment(SceneComponent);
 	InputText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("InputText"));
 	InputText->SetupAttachment(mesh);
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(mesh);
 
 	correctPassword = "1 1 1 1";
 	currentPassword = "";
 	displayPassword = "";
 	inputNumCount = 0;
 
+	bSwitchCamera = false;
 	//InputText->SetText(displayPassword);
 
 }
@@ -35,12 +38,60 @@ void ADoorLockPanel::BeginPlay()
 		InputComponent->BindAction("Eight", IE_Pressed, this, &ADoorLockPanel::OnEightPressed);
 		InputComponent->BindAction("Nine", IE_Pressed, this, &ADoorLockPanel::OnNinePressed);
 	}
+	this->ToggleCamera.AddDynamic(this, &ADoorLockPanel::CameraToggle);
 
 	if (DoorPanel) {
 		UE_LOG(LogTemp, Warning, TEXT("Door Panel Attached"));
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Door NOT Panel Attached"));
+	}
+}
+
+void ADoorLockPanel::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Trigger entered"));
+	bSwitchCamera = true;
+	ToggleCamera.Broadcast();
+
+}
+
+void ADoorLockPanel::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Trigger exited"));
+	bSwitchCamera = false;
+	ToggleCamera.Broadcast();
+}
+void ADoorLockPanel::CameraToggle()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Camera Toggle firing through events"));
+	const float TimeBetweenCameraChanges = 2.0f;
+	const float SmoothBlendTime = 0.75f;
+	//TimeToNextCameraChange -= DeltaTime;
+	//if (TimeToNextCameraChange <= 0.0f)
+	//{
+		//TimeToNextCameraChange += TimeBetweenCameraChanges;
+
+		// Find the actor that handles control for the local player.
+	APlayerController* OurPlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (OurPlayerController)
+	{
+		//FMinimalViewInfo * testView = NULL;
+			//camera->GetCameraView(.1f, testView);
+		if ((OurPlayerController->GetViewTarget() != PlayerCamera) && (PlayerCamera != nullptr) && !bSwitchCamera)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to person"));
+
+			// Cut instantly to camera one.
+			OurPlayerController->SetViewTargetWithBlend(PlayerCamera, SmoothBlendTime);
+		}
+		else if ((OurPlayerController->GetViewTarget() != this) && (this != nullptr) && bSwitchCamera)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to panel"));
+
+			// Blend smoothly to camera two.
+			OurPlayerController->SetViewTargetWithBlend(this, SmoothBlendTime);
+		}
 	}
 }
 
@@ -148,3 +199,4 @@ void ADoorLockPanel::OnNinePressed()
 	currentPassword += "9";
 	UpdateUIAndCheckPassword();
 }
+

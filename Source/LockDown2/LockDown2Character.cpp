@@ -85,7 +85,7 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
 			if (Hit.GetActor()->GetClass()->IsChildOf(AWorldInteractable::StaticClass())) {
 				CurrentSelectedItem = Cast<AWorldInteractable>(Hit.GetActor())->ItemName;
-				UE_LOG(LogTemp, Warning, TEXT("Hovering over a world item %s"), *CurrentSelectedItem);
+				//UE_LOG(LogTemp, Warning, TEXT("Hovering over a world item %s"), *CurrentSelectedItem);
 
 			}
 			if (Hit.GetActor()->GetClass()->IsChildOf(AExaminableInteractable::StaticClass())) {
@@ -234,7 +234,7 @@ void ALockDown2Character::SetupPlayerInputComponent(class UInputComponent* Playe
 
 void ALockDown2Character::MoveForward(float Value)
 {
-	if (Value != 0.0f)
+	if (Value != 0.0f && bCanMove)
 	{
 		// add movement in that direction
 		AddMovementInput(GetActorForwardVector(), Value);
@@ -243,7 +243,7 @@ void ALockDown2Character::MoveForward(float Value)
 
 void ALockDown2Character::MoveRight(float Value)
 {
-	if (Value != 0.0f)
+	if (Value != 0.0f && bCanMove)
 	{
 		// add movement in that direction
 		AddMovementInput(GetActorRightVector(), Value);
