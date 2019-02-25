@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		USceneComponent* HoldingComp;
 
+	UPROPERTY(EditAnywhere)
+		FTransform StartPosition;
+
 	UFUNCTION()
 		void RotateActor();
 

@@ -4,21 +4,38 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Materials/MaterialInstanceDynamic.h"
 #include "GameFramework/Character.h"
 
 AExaminableInteractable::AExaminableInteractable() {
 	MyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
 	MyMesh->SetSimulatePhysics(true);
 	//RootComponent = MyMesh;
-	MyMesh->SetupAttachment(RootComponent);
+	//MyMesh->SetupAttachment(SceneComponent);
+	MyMesh->SetupAttachment(SceneComponent);
+	//boxTrigger->SetupAttachment(MyMesh);
 	//boxTrigger->SetupAttachment(MyMesh);
 	//MyMesh->SetupAttachment(boxTrigger);
 	bHolding = false;
 	bGravity = true;
+
+	//UMaterialInstanceDynamic * MaterialInstance = MyMesh->CreateDynamicMaterialInstance(0);
+
 }
 void AExaminableInteractable::BeginPlay()
 {
 	Super::BeginPlay();
+	//StartPosition = 
+	//FVector test = GetOwner()->GetActorLocation();
+	//MyMesh->GetComponentLocation();
+	//UE_LOG(LogTemp, Warning, TEXT("pickup world location is %s"), MyMesh->GetComponentLocation().ToString());
+
+
+	FVector Location = MyMesh->GetComponentLocation();
+	FString text = Location.ToString();
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *Location.ToString());
+
+
 	MyCharacter = UGameplayStatics::GetPlayerCharacter(this, 0);
 	PlayerCamera = MyCharacter->FindComponentByClass<UCameraComponent>();
 
@@ -33,6 +50,16 @@ void AExaminableInteractable::BeginPlay()
 			}
 		}
 	}
+
+	////MaterialInstance->SetScalarParameterValue(FName("Value"), 0.0f);
+
+	//if (MaterialInstance) {
+	//	UE_LOG(LogTemp, Warning, TEXT("1"));
+	//	//MaterialInstance->SetScalarParameterValue(FName("Value"), 1.0f);
+	//}
+	//else {
+	//	UE_LOG(LogTemp, Warning, TEXT("2"));
+	//}
 }
 void AExaminableInteractable::RotateActor()
 {
@@ -59,6 +86,7 @@ void AExaminableInteractable::Pickup()
 void AExaminableInteractable::Tick(float DeltaTime)
 {
 	if (bHolding && HoldingComp) {
+	
 		SetActorLocationAndRotation(HoldingComp->GetComponentLocation(), HoldingComp->GetComponentRotation());
 	}
 }
