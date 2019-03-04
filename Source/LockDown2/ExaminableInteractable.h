@@ -6,6 +6,7 @@
 #include "WorldInteractable.h"
 #include "GameFramework/Actor.h"
 #include "Camera/CameraComponent.h"
+#include "PutBackVolumeActor.h"
 #include "ExaminableInteractable.generated.h"
 
 /**
@@ -20,19 +21,19 @@ public:
 	AExaminableInteractable();
 
 	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* MyMesh;
+	UStaticMeshComponent* MyMesh;
 
 	UPROPERTY(EditAnywhere)
-		USceneComponent* HoldingComp;
+	USceneComponent* HoldingComp;
 
 	UPROPERTY(EditAnywhere)
-		FTransform StartPosition;
+	FTransform StartPosition;
 
 	UFUNCTION()
-		void RotateActor();
+	void RotateActor();
 
 	UFUNCTION()
-		void Pickup();
+	void Pickup();
 
 	bool bHolding;
 	bool bGravity;
@@ -48,8 +49,23 @@ public:
 
 	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class APutBackVolumeActor> ToSpawn;
+
+	void SpawnPutBackVolume();
+	bool bPutBack;
+	UFUNCTION()
+	void SetPutBack(bool value);
+	UPROPERTY(EditAnywhere)
+	FVector Location;
+
+	UPROPERTY(EditAnywhere)
+	FRotator Rotation;
 protected:
 
 	virtual void BeginPlay() override;
 
+private:
+
+	APutBackVolumeActor * PutBackVolume;
 };

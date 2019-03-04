@@ -96,11 +96,7 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 				DoorPanel = Cast <ADoorPanel>(Hit.GetActor());
 				//currentSelectedItem = (FString)doorPanel->name;
 			}			
-			//if (Hit.GetActor()->GetClass()->IsChildOf(ADrinkMachine::StaticClass())) {
-			//	//Cast <ADrinkMachine>(Hit.GetActor())->OnHoverOver();
-			//	drinkMachine = Cast <ADrinkMachine>(Hit.GetActor());
-			//	currentSelectedItem = (FString)drinkMachine->name;
-			//}
+
 
 
 			//UE_LOG(LogTemp, Warning, TEXT(currentSelectedItem));
@@ -112,6 +108,18 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 			DoorPanel = NULL;
 
 			//drinkMachine = NULL;
+		}
+	}
+	else {
+		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
+			if (Hit.GetActor()->GetClass()->IsChildOf(APutBackVolumeActor::StaticClass())) {
+				CurrentSelectedItem = "Put Back";
+
+			}
+		}
+		else {
+			CurrentSelectedItem = "";
+
 		}
 	}
 
@@ -137,6 +145,17 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 	}
 }
 
+bool ALockDown2Character::PutBack()
+{
+	//Make a quick raycast to test to see if its hitting something with class putbackvolume. 
+	//If so, hit true. 
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
+		if (Hit.GetActor()->GetClass()->IsChildOf(APutBackVolumeActor::StaticClass())) {
+			return true;
+		}
+	}
+	return false;
+}
 void ALockDown2Character::OnAction()
 {
 
@@ -190,6 +209,7 @@ void ALockDown2Character::ToggleItemPickup()
 {
 	if (CurrentItem) {
 		bHoldingItem = !bHoldingItem;
+		CurrentItem->SetPutBack(PutBack());
 		CurrentItem->Pickup();
 
 		if (!bHoldingItem) {

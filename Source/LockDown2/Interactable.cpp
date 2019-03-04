@@ -8,7 +8,8 @@ AInteractable::AInteractable()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
-	SceneComponent->SetupAttachment(RootComponent);
+	//SceneComponent->SetupAttachment(RootComponent);
+	RootComponent = SceneComponent;
 	boxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxTrigger"));
 	boxTrigger->SetupAttachment(SceneComponent);
 

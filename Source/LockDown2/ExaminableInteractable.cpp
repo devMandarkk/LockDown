@@ -9,10 +9,14 @@
 
 AExaminableInteractable::AExaminableInteractable() {
 	MyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
+	RootComponent = MyMesh;
+
 	MyMesh->SetSimulatePhysics(true);
+	//MyMesh->SetupAttachment(SceneComponent);
+
+
 	//RootComponent = MyMesh;
 	//MyMesh->SetupAttachment(SceneComponent);
-	MyMesh->SetupAttachment(SceneComponent);
 	//boxTrigger->SetupAttachment(MyMesh);
 	//boxTrigger->SetupAttachment(MyMesh);
 	//MyMesh->SetupAttachment(boxTrigger);
@@ -21,6 +25,24 @@ AExaminableInteractable::AExaminableInteractable() {
 
 	//UMaterialInstanceDynamic * MaterialInstance = MyMesh->CreateDynamicMaterialInstance(0);
 
+}
+void AExaminableInteractable::SpawnPutBackVolume()
+{
+	if (ToSpawn) {
+		UWorld * world = GetWorld();
+
+		if (world) {
+			FActorSpawnParameters spawnParams;
+			spawnParams.Owner = this;
+
+			PutBackVolume = world->SpawnActor<APutBackVolumeActor>(ToSpawn, GetActorLocation(), GetActorRotation(), spawnParams);
+			PutBackVolume->SetActorHiddenInGame(true);
+		}
+	}
+}
+void AExaminableInteractable::SetPutBack(bool value)
+{
+	bPutBack = value;
 }
 void AExaminableInteractable::BeginPlay()
 {
@@ -69,7 +91,7 @@ void AExaminableInteractable::RotateActor()
 
 void AExaminableInteractable::Pickup()
 {
-	UE_LOG(LogTemp, Warning, TEXT("pickup function called"));
+	//UE_LOG(LogTemp, Warning, TEXT("pickup function called"));
 
 	bHolding = !bHolding;
 	bGravity = !bGravity;
@@ -78,8 +100,25 @@ void AExaminableInteractable::Pickup()
 	MyMesh->SetCollisionEnabled(bHolding ? ECollisionEnabled::NoCollision : ECollisionEnabled::QueryAndPhysics);
 
 	if (!bHolding) {
-		ForwardVector = PlayerCamera->GetForwardVector();
-		MyMesh->AddForce(ForwardVector * 100000 * MyMesh->GetMass());
+		if (bPutBack) {
+			SetActorLocationAndRotation(Location, Rotation, false, 0, ETeleportType::None);
+			bPutBack = false;
+		}
+		else {
+			ForwardVector = PlayerCamera->GetForwardVector();
+			MyMesh->AddForce(ForwardVector * 100000 * MyMesh->GetMass());
+			bPutBack = false;
+
+		}
+		if (PutBackVolume) {
+			PutBackVolume->Destroy();
+		}
+	}
+	else {
+		Location = GetActorLocation();
+		Rotation = GetActorRotation();
+		SpawnPutBackVolume();
+
 	}
 }
 

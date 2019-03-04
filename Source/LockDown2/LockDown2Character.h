@@ -71,6 +71,9 @@ public:
 	FComponentQueryParams DefaultComponentQueryParams;
 	FCollisionResponseParams DefaultResponseParam;
 
+	bool PutBack();
+
+
 protected:
 	virtual void BeginPlay();
 
