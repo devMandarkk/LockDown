@@ -21,6 +21,16 @@ void AWorldInteractable::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 
 }
 
+void AWorldInteractable::OnHoverOver()
+{
+	CreateTheOutline.Broadcast();
+}
+
+void AWorldInteractable::OnHoverOff()
+{
+	TurnOffOutline.Broadcast();
+}
+
 void AWorldInteractable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

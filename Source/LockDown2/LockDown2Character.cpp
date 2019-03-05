@@ -56,6 +56,7 @@ ALockDown2Character::ALockDown2Character()
 	//Initialize all interactables as null here
 	CurrentItem = NULL;
 	DoorPanel = NULL;
+	CurrentHoveredItem = NULL;
 	CurrentSelectedItem = "";
 
 	bCanMove = true;
@@ -84,25 +85,41 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 	if (!bHoldingItem) {
 		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
 			if (Hit.GetActor()->GetClass()->IsChildOf(AWorldInteractable::StaticClass())) {
-				CurrentSelectedItem = Cast<AWorldInteractable>(Hit.GetActor())->ItemName;
+				
+				CurrentHoveredItem = Cast<AWorldInteractable>(Hit.GetActor());
+				CurrentSelectedItem = CurrentHoveredItem->ItemName;
+				CurrentHoveredItem->OnHoverOver();
 				//UE_LOG(LogTemp, Warning, TEXT("Hovering over a world item %s"), *CurrentSelectedItem);
+				
 
+				if (Hit.GetActor()->GetClass()->IsChildOf(AExaminableInteractable::StaticClass())) {
+					CurrentItem = Cast <AExaminableInteractable>(Hit.GetActor());
+					//currentSelectedItem = CurrentItem->GetName();
+				}
+				if (Hit.GetActor()->GetClass()->IsChildOf(ADoorPanel::StaticClass())) {
+					DoorPanel = Cast <ADoorPanel>(Hit.GetActor());
+					//currentSelectedItem = (FString)doorPanel->name;
+				}
 			}
-			if (Hit.GetActor()->GetClass()->IsChildOf(AExaminableInteractable::StaticClass())) {
-				CurrentItem = Cast <AExaminableInteractable>(Hit.GetActor());
-				//currentSelectedItem = CurrentItem->GetName();
+			else {
+				//The ray hit something but not interactable
+				if (CurrentHoveredItem) {
+					CurrentHoveredItem->OnHoverOff();
+				}
+				CurrentSelectedItem = "";
+				CurrentItem = NULL;
+				DoorPanel = NULL;
 			}
-			if (Hit.GetActor()->GetClass()->IsChildOf(ADoorPanel::StaticClass())) {
-				DoorPanel = Cast <ADoorPanel>(Hit.GetActor());
-				//currentSelectedItem = (FString)doorPanel->name;
-			}			
-
+			
 
 
 			//UE_LOG(LogTemp, Warning, TEXT(currentSelectedItem));
 
 		}
 		else {
+			if (CurrentHoveredItem) {
+				CurrentHoveredItem->OnHoverOff();
+			}
 			CurrentSelectedItem = "";
 			CurrentItem = NULL;
 			DoorPanel = NULL;
@@ -111,6 +128,10 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 		}
 	}
 	else {
+		if (CurrentHoveredItem) {
+			CurrentHoveredItem->OnHoverOff();
+		}
+
 		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
 			if (Hit.GetActor()->GetClass()->IsChildOf(APutBackVolumeActor::StaticClass())) {
 				CurrentSelectedItem = "Put Back";

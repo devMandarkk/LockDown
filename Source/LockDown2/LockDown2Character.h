@@ -47,6 +47,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	class ADoorPanel* DoorPanel;
 
+	UPROPERTY(EditAnywhere)
+	class AWorldInteractable* CurrentHoveredItem;
+
 	bool bCanMove;
 	bool bHoldingItem;
 	bool bInspecting;

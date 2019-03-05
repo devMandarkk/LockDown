@@ -20,7 +20,7 @@ class LOCKDOWN2_API AExaminableInteractable : public AWorldInteractable
 public:
 	AExaminableInteractable();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* MyMesh;
 
 	UPROPERTY(EditAnywhere)

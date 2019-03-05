@@ -10,6 +10,9 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTogglePPOutline);
+
 UCLASS()
 class LOCKDOWN2_API AWorldInteractable : public AInteractable
 {
@@ -26,6 +29,15 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	FString ItemName;
+
+	void OnHoverOver();
+	void OnHoverOff();
+
+	UPROPERTY(BlueprintAssignable)
+	FTogglePPOutline CreateTheOutline;
+
+	UPROPERTY(BlueprintAssignable)
+	FTogglePPOutline TurnOffOutline;
 
 protected:
 	virtual void Tick(float DeltaTime) override;
