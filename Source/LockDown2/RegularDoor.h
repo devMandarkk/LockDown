@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsOpen;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool IsElevatorDoor;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class ADoorPanel * DoorPanel;
 

@@ -50,17 +50,17 @@ void ADoorLockPanel::BeginPlay()
 
 void ADoorLockPanel::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Trigger entered"));
-	bSwitchCamera = true;
-	ToggleCamera.Broadcast();
+	//UE_LOG(LogTemp, Warning, TEXT("Trigger entered"));
+	//bSwitchCamera = true;
+	//ToggleCamera.Broadcast();
 
 }
 
 void ADoorLockPanel::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Trigger exited"));
-	bSwitchCamera = false;
-	ToggleCamera.Broadcast();
+	//UE_LOG(LogTemp, Warning, TEXT("Trigger exited"));
+	//bSwitchCamera = false;
+	//ToggleCamera.Broadcast();
 }
 void ADoorLockPanel::CameraToggle()
 {
@@ -97,6 +97,10 @@ void ADoorLockPanel::CameraToggle()
 
 void ADoorLockPanel::OnInteract()
 {
+	UE_LOG(LogTemp, Warning, TEXT("interacting virtuall"));
+	bSwitchCamera = !bSwitchCamera;
+	ToggleCamera.Broadcast();
+
 }
 
 void ADoorLockPanel::UpdateUIAndCheckPassword()

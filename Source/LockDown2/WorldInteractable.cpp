@@ -21,6 +21,12 @@ void AWorldInteractable::OnOverlapEnd(UPrimitiveComponent * OverlappedComp, AAct
 
 }
 
+void AWorldInteractable::OnInteract()
+{
+	UE_LOG(LogTemp, Warning, TEXT("world interactable on interact"));
+
+}
+
 void AWorldInteractable::OnHoverOver()
 {
 	CreateTheOutline.Broadcast();

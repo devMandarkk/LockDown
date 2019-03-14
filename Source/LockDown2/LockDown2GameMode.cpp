@@ -14,4 +14,6 @@ ALockDown2GameMode::ALockDown2GameMode()
 
 	// use our custom HUD class
 	HUDClass = ALockDown2HUD::StaticClass();
+
+	hasElevatorKeyCard = false;
 }

@@ -55,7 +55,8 @@ ALockDown2Character::ALockDown2Character()
 
 	//Initialize all interactables as null here
 	CurrentItem = NULL;
-	DoorPanel = NULL;
+	//DoorPanel = NULL;
+	WorldInteractable = NULL;
 	CurrentHoveredItem = NULL;
 	CurrentSelectedItem = "";
 
@@ -96,10 +97,13 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 					CurrentItem = Cast <AExaminableInteractable>(Hit.GetActor());
 					//currentSelectedItem = CurrentItem->GetName();
 				}
-				if (Hit.GetActor()->GetClass()->IsChildOf(ADoorPanel::StaticClass())) {
-					DoorPanel = Cast <ADoorPanel>(Hit.GetActor());
-					//currentSelectedItem = (FString)doorPanel->name;
+				else {
+					WorldInteractable = CurrentHoveredItem;
 				}
+				//if (Hit.GetActor()->GetClass()->IsChildOf(ADoorPanel::StaticClass())) {
+				//	DoorPanel = Cast <ADoorPanel>(Hit.GetActor());
+				//	//currentSelectedItem = (FString)doorPanel->name;
+				//}
 			}
 			else {
 				//The ray hit something but not interactable
@@ -108,7 +112,8 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 				}
 				CurrentSelectedItem = "";
 				CurrentItem = NULL;
-				DoorPanel = NULL;
+				//DoorPanel = NULL;
+				WorldInteractable = NULL;
 			}
 			
 
@@ -122,7 +127,9 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 			}
 			CurrentSelectedItem = "";
 			CurrentItem = NULL;
-			DoorPanel = NULL;
+			//DoorPanel = NULL;
+			WorldInteractable = NULL;
+
 
 			//drinkMachine = NULL;
 		}
@@ -184,8 +191,8 @@ void ALockDown2Character::OnAction()
 		ToggleItemPickup();
 
 	}
-	if (DoorPanel && !bInspecting) {
-		DoorPanel->OnInteract();
+	else if (WorldInteractable && !bInspecting) {
+		WorldInteractable->OnInteract();
 	}
 	//if (drinkMachine && !bInspecting) {
 	//	drinkMachine->OnInteract();

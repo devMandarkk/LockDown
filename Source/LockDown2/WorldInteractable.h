@@ -26,6 +26,7 @@ public:
 	
 	virtual void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) override;
 
+	virtual void OnInteract();
 
 	UPROPERTY(EditAnywhere)
 	FString ItemName;

@@ -23,7 +23,7 @@ class LOCKDOWN2_API ADoorLockPanel : public AWorldInteractable
 public:
 	ADoorLockPanel();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent * mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -53,7 +53,7 @@ public:
 	FString displayPassword;
 	int32 inputNumCount;
 
-	void OnInteract();
+	virtual void OnInteract() override;
 
 	void UpdateUIAndCheckPassword();
 

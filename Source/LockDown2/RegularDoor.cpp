@@ -14,26 +14,31 @@ ARegularDoor::ARegularDoor() {
 	EndPosition->SetupAttachment(boxTrigger);
 
 	IsOpen = NULL;
+	IsElevatorDoor = false;
 }
 
 void ARegularDoor::BeginPlay() {
 	Super::BeginPlay();
-	DoorClosePosition = StartPosition->GetComponentLocation();
-	DoorOpenPosition = EndPosition->GetComponentLocation();
+	if (!IsElevatorDoor) {
+		DoorClosePosition = StartPosition->GetComponentLocation();
+		DoorOpenPosition = EndPosition->GetComponentLocation();
 
-	if (DoorPanel != NULL) {
-		IsOpen = DoorPanel->isOpen;
 		
-		if (IsOpen) {
-			mesh->SetWorldLocation(DoorOpenPosition);
+		if (DoorPanel != NULL) {
+			IsOpen = DoorPanel->isOpen;
+
+			if (IsOpen) {
+				mesh->SetWorldLocation(DoorOpenPosition);
+			}
+			else {
+				mesh->SetWorldLocation(DoorClosePosition);
+			}
 		}
 		else {
-			mesh->SetWorldLocation(DoorClosePosition);
+			UE_LOG(LogTemp, Warning, TEXT("No door panel associated with the door."));
 		}
 	}
-	else {
-			UE_LOG(LogTemp, Warning, TEXT("No door panel associated with the door."));
-	}
+
 
 
 	//UE_LOG(LogTemp, Warning, TEXT("DoorClosePosition's Location is %s"), *DoorClosePosition.ToString());

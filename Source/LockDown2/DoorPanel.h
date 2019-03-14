@@ -21,7 +21,7 @@ public:
 	ADoorPanel();
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditAnywhere)
@@ -36,7 +36,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	class ARegularDoor* RegularDoor;
 
-	void OnInteract();
+	UPROPERTY(EditAnywhere)
+	class ARegularDoor* RegularDoor2;
+
+	virtual void OnInteract() override;
 	void UnlockDoor();
 
 protected:

@@ -13,6 +13,8 @@ class ALockDown2GameMode : public AGameModeBase
 
 public:
 	ALockDown2GameMode();
+
+	bool hasElevatorKeyCard;
 };
 
 
