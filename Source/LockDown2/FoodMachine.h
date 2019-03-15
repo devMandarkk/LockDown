@@ -9,6 +9,8 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FToggleFoodMachineDoorRequest);
+
 UCLASS()
 class LOCKDOWN2_API AFoodMachine : public AWorldInteractable
 {
@@ -23,6 +25,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent * FoodMachineCover;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector DoorOpenPosition;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector DoorClosePosition;
+
+	UPROPERTY(BlueprintAssignable)
+		FToggleFoodMachineDoorRequest ToggleDoorRequest;
+
+	float DoorMoveDistance;
 
 	virtual void OnInteract() override;
 
