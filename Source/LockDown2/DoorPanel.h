@@ -42,6 +42,16 @@ public:
 	virtual void OnInteract() override;
 	void UnlockDoor();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UMaterialInterface * lockMaterialGreen;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UMaterialInterface * lockMaterialRed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UMaterialInterface * lockMaterialGrey;
+
+	void UpdateMaterial(bool IsLocked);
 protected:
 
 	virtual void BeginPlay() override;

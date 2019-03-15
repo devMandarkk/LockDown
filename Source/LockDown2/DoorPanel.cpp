@@ -9,7 +9,6 @@ ADoorPanel::ADoorPanel()
 
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
 	mesh->SetupAttachment(boxTrigger);
-
 	btnMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BtnMesh"));
 	btnMesh->SetupAttachment(mesh);
 	//RootComponent = mesh;
@@ -17,6 +16,7 @@ ADoorPanel::ADoorPanel()
 	//isOpen = false;
 	//isOpen = false;
 }
+
 void ADoorPanel::BeginPlay()
 {
 	Super::BeginPlay();
@@ -28,7 +28,7 @@ void ADoorPanel::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Door closed at start"));
 	}
 
-
+	UpdateMaterial(IsLocked);
 }
 void ADoorPanel::OnInteract()
 {
@@ -55,6 +55,21 @@ void ADoorPanel::OnInteract()
 }
 
 
+void ADoorPanel::UpdateMaterial(bool IsLocked)
+{
+	//red light material index is - 1
+	//green light material index is - 5
+	if (IsLocked) {
+		//It is locked - Red light needs to be on, the other should be default
+		mesh->SetMaterial(1, lockMaterialRed);
+		mesh->SetMaterial(5, lockMaterialGrey);
+	}
+	else {
+		//It is unlocked - Green light needs to be on, the other should be default. 
+		mesh->SetMaterial(1, lockMaterialGrey);
+		mesh->SetMaterial(5, lockMaterialGreen);
+	}
+}
 
 void ADoorPanel::Tick(float DeltaTime)
 {
@@ -64,4 +79,6 @@ void ADoorPanel::UnlockDoor(){
 	UE_LOG(LogTemp, Warning, TEXT("Door Unlocked from Door Panel"));
 
 	IsLocked = false;
+	UpdateMaterial(IsLocked);
+
 }
