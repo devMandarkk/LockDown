@@ -35,6 +35,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FToggleFoodMachineDoorRequest ToggleDoorRequest;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float DoorMoveDistance;
 
 	virtual void OnInteract() override;
