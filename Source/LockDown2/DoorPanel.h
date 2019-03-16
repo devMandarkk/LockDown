@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "WorldInteractable.h"
-#include "RegularDoor.h"
+#include "BaseDoorClass.h"
 #include "DoorPanel.generated.h"
 
 /**
@@ -34,10 +34,7 @@ public:
 	bool IsLocked;
 
 	UPROPERTY(EditAnywhere)
-	class ARegularDoor* RegularDoor;
-
-	UPROPERTY(EditAnywhere)
-	class ARegularDoor* RegularDoor2;
+	class ABaseDoorClass * PanelDoor;
 
 	virtual void OnInteract() override;
 	void UnlockDoor();

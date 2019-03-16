@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "WorldInteractable.h"
+#include "BaseDoorClass.h"
 #include "DoorPanel.h"
 #include "RegularDoor.generated.h"
 
@@ -14,7 +15,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FToggleDoorRequest);
 
 UCLASS()
-class LOCKDOWN2_API ARegularDoor : public AWorldInteractable
+class LOCKDOWN2_API ARegularDoor : public ABaseDoorClass
 {
 	GENERATED_BODY()
 
@@ -26,13 +27,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* mesh;
 
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//USceneComponent* EndPosition;
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USceneComponent* EndPosition;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USceneComponent* StartPosition;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//USceneComponent* StartPosition;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector DoorClosePosition;
@@ -43,17 +42,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool IsOpen;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsElevatorDoor;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class ADoorPanel * DoorPanel;
 
 	UPROPERTY(BlueprintAssignable)
 	FToggleDoorRequest ToggleDoorRequest;
 
-	void ToggleDoor();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float DoorMoveDistance;
+
+	virtual void ToggleDoor() override;
 
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 };

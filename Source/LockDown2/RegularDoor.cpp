@@ -8,20 +8,21 @@ ARegularDoor::ARegularDoor() {
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
 	mesh->SetupAttachment(boxTrigger);
 
-	StartPosition = CreateDefaultSubobject<USceneComponent>(TEXT("StartPosition"));
-	StartPosition->SetupAttachment(boxTrigger);
-	EndPosition = CreateDefaultSubobject<USceneComponent>(TEXT("EndPosition"));
-	EndPosition->SetupAttachment(boxTrigger);
+	//StartPosition = CreateDefaultSubobject<USceneComponent>(TEXT("StartPosition"));
+	//StartPosition->SetupAttachment(boxTrigger);
+	//EndPosition = CreateDefaultSubobject<USceneComponent>(TEXT("EndPosition"));
+	//EndPosition->SetupAttachment(boxTrigger);
 
 	IsOpen = NULL;
-	IsElevatorDoor = false;
+
+	DoorMoveDistance = 100.f;
 }
 
 void ARegularDoor::BeginPlay() {
 	Super::BeginPlay();
-	if (!IsElevatorDoor) {
-		DoorClosePosition = StartPosition->GetComponentLocation();
-		DoorOpenPosition = EndPosition->GetComponentLocation();
+
+		DoorClosePosition = mesh->GetComponentLocation();
+		DoorOpenPosition = FVector(DoorClosePosition.X + DoorMoveDistance, DoorClosePosition.Y, DoorClosePosition.Z);
 
 		
 		if (DoorPanel != NULL) {
@@ -37,25 +38,6 @@ void ARegularDoor::BeginPlay() {
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("No door panel associated with the door."));
 		}
-	}
-
-
-
-	//UE_LOG(LogTemp, Warning, TEXT("DoorClosePosition's Location is %s"), *DoorClosePosition.ToString());
-	//UE_LOG(LogTemp, Warning, TEXT("DoorOpenPosition's Location is %s"), *DoorOpenPosition.ToString());
-
-}
-
-void ARegularDoor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	//FVector test = EndPosition->GetComponentLocation();
-	//UE_LOG(LogTemp, Warning, TEXT("End position X:%f, Y:%f, Z:%f"), &test.X, &test.Y, &test.Z);
-	//UE_LOG(LogTemp, Warning, TEXT("found no door panel"));
-	//FVector tes1 = StartPosition->GetComponentLocation();
-
-	//UE_LOG(LogTemp, Warning, TEXT("MyCharacter's Location is %s"), *tes1.ToString());
-
 }
 
 void ARegularDoor::ToggleDoor( ) {
