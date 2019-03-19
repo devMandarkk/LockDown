@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "WorldInteractable.h"
 #include "Camera/CameraComponent.h"
-#include "WidgetComponent.h"
 #include "Comuter_Terminal.generated.h"
 
 /**

@@ -260,8 +260,8 @@ void ALockDown2Character::SetupPlayerInputComponent(class UInputComponent* Playe
 
 
 	// Bind movement events
-	PlayerInputComponent->BindAxis("MoveForward", this, &ALockDown2Character::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ALockDown2Character::MoveRight);
+		PlayerInputComponent->BindAxis("MoveForward", this, &ALockDown2Character::MoveForward);
+		PlayerInputComponent->BindAxis("MoveRight", this, &ALockDown2Character::MoveRight);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
