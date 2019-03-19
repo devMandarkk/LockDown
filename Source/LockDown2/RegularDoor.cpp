@@ -16,14 +16,21 @@ ARegularDoor::ARegularDoor() {
 	IsOpen = NULL;
 
 	DoorMoveDistance = 100.f;
+	MoveInX = true;
 }
 
 void ARegularDoor::BeginPlay() {
 	Super::BeginPlay();
 
+	if (MoveInX) {
 		DoorClosePosition = mesh->GetComponentLocation();
 		DoorOpenPosition = FVector(DoorClosePosition.X + DoorMoveDistance, DoorClosePosition.Y, DoorClosePosition.Z);
-
+	}
+	else {
+		DoorClosePosition = mesh->GetComponentLocation();
+		DoorOpenPosition = FVector(DoorClosePosition.X , DoorClosePosition.Y + DoorMoveDistance, DoorClosePosition.Z);
+	}
+		
 		
 		if (DoorPanel != NULL) {
 			IsOpen = DoorPanel->isOpen;

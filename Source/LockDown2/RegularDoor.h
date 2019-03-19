@@ -51,6 +51,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float DoorMoveDistance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool MoveInX;
+
+
 	virtual void ToggleDoor() override;
 
 	virtual void BeginPlay() override;
