@@ -21,8 +21,8 @@ void ALockerRoomDoor::BeginPlay()
 	RightDoorClosePosition = DoorRight->GetComponentLocation();
 	LeftDoorClosePosition = DoorLeft->GetComponentLocation();
 
-	RightDoorOpenPosition = FVector(RightDoorClosePosition.X + DoorMoveDistance, RightDoorClosePosition.Y, RightDoorClosePosition.Z);
-	LeftDoorOpenPosition = FVector(LeftDoorClosePosition.X - DoorMoveDistance, LeftDoorClosePosition.Y, LeftDoorClosePosition.Z);
+	RightDoorOpenPosition = FVector(RightDoorClosePosition.X, RightDoorClosePosition.Y + DoorMoveDistance, RightDoorClosePosition.Z);
+	LeftDoorOpenPosition = FVector(LeftDoorClosePosition.X, LeftDoorClosePosition.Y - DoorMoveDistance, LeftDoorClosePosition.Z);
 
 	if (DoorPanel != NULL) {
 		IsOpen = DoorPanel->isOpen;
