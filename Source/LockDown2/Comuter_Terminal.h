@@ -32,6 +32,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		AActor * PlayerCamera;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	bool bSwitchCamera;
 
 	UPROPERTY()
