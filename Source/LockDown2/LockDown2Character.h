@@ -57,7 +57,7 @@ public:
 	bool bHoldingItem;
 	bool bInspecting;
 
-
+	bool bHasKey;
 
 	float PitchMax;
 	float PitchMin;

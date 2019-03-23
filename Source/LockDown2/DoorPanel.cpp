@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "DoorPanel.h"
+#include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
+
 
 ADoorPanel::ADoorPanel()
 {
@@ -20,15 +23,29 @@ ADoorPanel::ADoorPanel()
 void ADoorPanel::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	if (isOpen) {
-		UE_LOG(LogTemp, Warning, TEXT("Door Open at start"));
+		//UE_LOG(LogTemp, Warning, TEXT("Door Open at start"));
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Door closed at start"));
+		//UE_LOG(LogTemp, Warning, TEXT("Door closed at start"));
 	}
 
 	UpdateMaterial(IsLocked);
+
+	if (IsElevatorPanel) {
+		PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+		if (PlayerCharacter->bHasKey) {
+			UE_LOG(LogTemp, Warning, TEXT("player has the key"));
+
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("player does not have the key"));
+
+		}
+	}
+
 }
 void ADoorPanel::OnInteract()
 {
@@ -45,7 +62,35 @@ void ADoorPanel::OnInteract()
 		}
 	}
 	else {
-		UE_LOG(LogTemp, Warning, TEXT("Door is locked!"));
+		//Door is locked
+
+		//if the door is an elevator door
+		if (IsElevatorPanel) {
+	
+			//Check if the player has the key
+
+			if (PlayerCharacter->bHasKey) {
+				//if has key is true and the door is still locked it means we need to 
+				//play unlock door hand animation
+				//update the lock panel mterial to green.
+
+				IsLocked = false;
+				UpdateMaterial(IsLocked);
+				UE_LOG(LogTemp, Warning, TEXT("player just unlocked the elevator"));
+
+			}
+			else {
+				//if has key is false play button push animation with no change. 
+				UE_LOG(LogTemp, Warning, TEXT("player doesnt have the key to open elevator"));
+
+			}
+		}
+		else {
+		UE_LOG(LogTemp, Warning, TEXT("Regular door is locked!"));
+		//It is a regular door panel which is locked. 
+		//Play the button push animation. 
+		//Play negative audio.
+		}
 	}
 
 }

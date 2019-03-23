@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "WorldInteractable.h"
 #include "BaseDoorClass.h"
+#include "LockDown2Character.h"
 #include "DoorPanel.generated.h"
 
 /**
@@ -34,7 +35,13 @@ public:
 	bool IsLocked;
 
 	UPROPERTY(EditAnywhere)
+	bool IsElevatorPanel;
+
+	UPROPERTY(EditAnywhere)
 	class ABaseDoorClass * PanelDoor;
+
+	UPROPERTY(EditAnywhere)
+	class ALockDown2Character * PlayerCharacter;
 
 	virtual void OnInteract() override;
 	void UnlockDoor();

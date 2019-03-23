@@ -62,6 +62,7 @@ ALockDown2Character::ALockDown2Character()
 
 	bCanMove = true;
 	bInspecting = false;
+	bHasKey = false;
 }
 
 void ALockDown2Character::BeginPlay()
