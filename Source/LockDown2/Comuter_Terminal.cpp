@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Comuter_Terminal.h"
+#include "LockDown2Character.h"
 #include "Kismet/GameplayStatics.h"
 
 AComuter_Terminal::AComuter_Terminal() {
@@ -37,14 +38,20 @@ void AComuter_Terminal::CameraToggle()
 		if ((OurPlayerController->GetViewTarget() != PlayerCamera) && (PlayerCamera != nullptr) && !bSwitchCamera)
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to person"));
-
+			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (PlayerCharacter) {
+				PlayerCharacter->bInteractingTerminal = false;
+			}
 			// Cut instantly to camera one.
 			OurPlayerController->SetViewTargetWithBlend(PlayerCamera, SmoothBlendTime);
 		}
 		else if ((OurPlayerController->GetViewTarget() != this) && (this != nullptr) && bSwitchCamera)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to panel"));
-
+			//UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to panel"));
+			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (PlayerCharacter) {
+				PlayerCharacter->bInteractingTerminal = true;
+			}
 			// Blend smoothly to camera two.
 			OurPlayerController->SetViewTargetWithBlend(this, SmoothBlendTime);
 		}

@@ -63,6 +63,8 @@ ALockDown2Character::ALockDown2Character()
 	bCanMove = true;
 	bInspecting = false;
 	bHasKey = false;
+	UPROPERTY(BlueprintReadWrite)
+	bInteractingTerminal = false;
 }
 
 void ALockDown2Character::BeginPlay()
@@ -287,7 +289,11 @@ void ALockDown2Character::MoveForward(float Value)
 	{
 		// add movement in that direction
 		AddMovementInput(GetActorForwardVector(), Value);
+		UE_LOG(LogTemp, Warning, TEXT("movement button pressed"));
+
 	}
+
+
 }
 
 void ALockDown2Character::MoveRight(float Value)
