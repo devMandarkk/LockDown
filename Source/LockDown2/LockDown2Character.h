@@ -57,7 +57,7 @@ public:
 	bool bHoldingItem;
 	bool bInspecting;
 	UPROPERTY(BlueprintReadOnly)
-	bool bInteractingTerminal; // this will be used later in BPS
+	int32 bInteractingTerminal; // this will be used later in BPS
 	bool bHasKey;
 
 	float PitchMax;

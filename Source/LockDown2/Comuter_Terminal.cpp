@@ -40,7 +40,7 @@ void AComuter_Terminal::CameraToggle()
 			//UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to person"));
 			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (PlayerCharacter) {
-				PlayerCharacter->bInteractingTerminal = false;
+				PlayerCharacter->bInteractingTerminal = 0;
 			}
 			// Cut instantly to camera one.
 			OurPlayerController->SetViewTargetWithBlend(PlayerCamera, SmoothBlendTime);
@@ -50,7 +50,7 @@ void AComuter_Terminal::CameraToggle()
 			//UE_LOG(LogTemp, Warning, TEXT("Time to switch Camera to panel"));
 			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (PlayerCharacter) {
-				PlayerCharacter->bInteractingTerminal = true;
+				PlayerCharacter->bInteractingTerminal = 1;
 			}
 			// Blend smoothly to camera two.
 			OurPlayerController->SetViewTargetWithBlend(this, SmoothBlendTime);

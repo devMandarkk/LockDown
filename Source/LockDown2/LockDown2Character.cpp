@@ -64,7 +64,7 @@ ALockDown2Character::ALockDown2Character()
 	bInspecting = false;
 	bHasKey = false;
 	UPROPERTY(BlueprintReadWrite)
-	bInteractingTerminal = false;
+	bInteractingTerminal = 0;
 }
 
 void ALockDown2Character::BeginPlay()
