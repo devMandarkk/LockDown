@@ -16,6 +16,8 @@ public:
 	// Sets default values for this actor's properties
 	ABaseDoorClass();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float DoorOpenDelay;
 	virtual void ToggleDoor();
 
 protected:

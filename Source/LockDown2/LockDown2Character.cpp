@@ -13,6 +13,7 @@
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 #include "ExaminableInteractable.h"
 #include "DoorPanel.h"
+#include "NameTypes.h"
 #include "DrawDebugHelpers.h"
 
 
@@ -31,20 +32,24 @@ ALockDown2Character::ALockDown2Character()
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
 
-	// Create a CameraComponent	
-	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
-	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FirstPersonCameraComponent->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
-	FirstPersonCameraComponent->bUsePawnControlRotation = true;
-
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	Mesh1P->SetOnlyOwnerSee(true);
-	Mesh1P->SetupAttachment(FirstPersonCameraComponent);
+	Mesh1P->SetupAttachment(GetCapsuleComponent());
 	Mesh1P->bCastDynamicShadow = false;
 	Mesh1P->CastShadow = false;
-	Mesh1P->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
-	Mesh1P->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+	//Mesh1P->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
+	//Mesh1P->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+
+	// Create a CameraComponent	
+	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	//FirstPersonCameraComponent->SetupAttachment(Mesh1P);
+	FName CameraSocket = TEXT("Head_JNT");
+	//FirstPersonCameraComponent->AttachToComponent(Mesh1P, FAttachmentTransformRules::KeepWorldTransform, CameraSocket);
+	FirstPersonCameraComponent->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, true), TEXT("Head_JNT"));
+
+	//FirstPersonCameraComponent->RelativeLocation = FVector(-39.56f, 1.75f, 64.f); // Position the camera
+	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
 	HoldingComponent = CreateDefaultSubobject<USceneComponent>(TEXT("HoldingComponent"));
 	HoldingComponent->RelativeLocation.X = 100.0f;
@@ -65,6 +70,8 @@ ALockDown2Character::ALockDown2Character()
 	bHasKey = false;
 	UPROPERTY(BlueprintReadWrite)
 	bInteractingTerminal = 0;
+
+	PlayerAnimationState = EPlayerState::PS_Idle;
 }
 
 void ALockDown2Character::BeginPlay()
@@ -73,7 +80,14 @@ void ALockDown2Character::BeginPlay()
 	Super::BeginPlay();
 	PitchMax = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->ViewPitchMax;
 	PitchMin = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->ViewPitchMin;
+	Mesh1P->SetHiddenInGame(true);
 
+
+	if (PlayerAnimationState == EPlayerState::PS_Idle)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player in idle state!"));
+
+	}
 }
 
 void ALockDown2Character::Tick(float DeltaSeconds)
@@ -176,6 +190,24 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 	}
 }
 
+void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
+{
+	//Hide arms at all times and use pawn rotation for looking.
+	//On interaction...
+	//Get player character and move it to set position.
+	//Show the hands mesh...
+	//Change mouse rotation from player to animation
+	//Then play push button animation one time.
+	Mesh1P->SetHiddenInGame(false);
+	FirstPersonCameraComponent->bUsePawnControlRotation = false;
+	PlayerAnimationState = NewAnimationState;
+}
+
+void ALockDown2Character::ResetAnimationAndMeshParameters()
+{
+	Mesh1P->SetHiddenInGame(true);
+	FirstPersonCameraComponent->bUsePawnControlRotation = true;
+}
 bool ALockDown2Character::PutBack()
 {
 	//Make a quick raycast to test to see if its hitting something with class putbackvolume. 

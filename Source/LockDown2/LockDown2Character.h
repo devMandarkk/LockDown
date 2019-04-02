@@ -6,6 +6,13 @@
 #include "GameFramework/Character.h"
 #include "LockDown2Character.generated.h"
 
+UENUM(BlueprintType)		//"BlueprintType" is essential to include
+enum class EPlayerState : uint8
+{
+	PS_Idle 	UMETA(DisplayName = "Idle"),
+	PS_ButtonPush 	UMETA(DisplayName = "ButtonPush"),
+}; 
+
 class UInputComponent;
 
 UCLASS(config=Game)
@@ -80,6 +87,17 @@ public:
 
 	bool PutBack();
 
+	/*Animation playing related variables!*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enum)
+	EPlayerState PlayerAnimationState;
+
+	//bool bPushButtonAnim;
+	UFUNCTION(BlueprintCallable)
+	void UpdateAnimationState(EPlayerState NewAnimationState);
+
+	UFUNCTION(BlueprintCallable)
+		void ResetAnimationAndMeshParameters();
 
 protected:
 	virtual void BeginPlay();

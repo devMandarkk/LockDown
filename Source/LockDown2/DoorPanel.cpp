@@ -24,6 +24,8 @@ void ADoorPanel::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
 	if (isOpen) {
 		//UE_LOG(LogTemp, Warning, TEXT("Door Open at start"));
 	}
@@ -34,8 +36,6 @@ void ADoorPanel::BeginPlay()
 	UpdateMaterial(IsLocked);
 
 	if (IsElevatorPanel) {
-		PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
 		if (PlayerCharacter->bHasKey) {
 			UE_LOG(LogTemp, Warning, TEXT("player has the key"));
 
@@ -55,6 +55,7 @@ void ADoorPanel::OnInteract()
 			//UE_LOG(LogTemp, Warning, TEXT("Time To Toggle Door"));
 			isOpen = !isOpen;
 			PanelDoor->ToggleDoor();
+			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_ButtonPush);
 		}
 
 		else {
