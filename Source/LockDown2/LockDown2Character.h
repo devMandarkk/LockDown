@@ -11,6 +11,7 @@ enum class EPlayerState : uint8
 {
 	PS_Idle 	UMETA(DisplayName = "Idle"),
 	PS_ButtonPush 	UMETA(DisplayName = "ButtonPush"),
+	PS_ElevatorSwipe UMETA(DisplayName = "ElevatorSwipe")
 }; 
 
 class UInputComponent;

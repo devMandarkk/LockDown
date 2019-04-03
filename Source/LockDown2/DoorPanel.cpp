@@ -14,6 +14,9 @@ ADoorPanel::ADoorPanel()
 	mesh->SetupAttachment(boxTrigger);
 	btnMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BtnMesh"));
 	btnMesh->SetupAttachment(mesh);
+
+	AnimationPositionPointer = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AnimationPositionPointer"));
+	AnimationPositionPointer->SetupAttachment(SceneComponent);
 	//RootComponent = mesh;
 	//name = "Door Panel";
 	//isOpen = false;
@@ -35,16 +38,7 @@ void ADoorPanel::BeginPlay()
 
 	UpdateMaterial(IsLocked);
 
-	if (IsElevatorPanel) {
-		if (PlayerCharacter->bHasKey) {
-			UE_LOG(LogTemp, Warning, TEXT("player has the key"));
-
-		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("player does not have the key"));
-
-		}
-	}
+	
 
 }
 void ADoorPanel::OnInteract()
@@ -55,7 +49,18 @@ void ADoorPanel::OnInteract()
 			//UE_LOG(LogTemp, Warning, TEXT("Time To Toggle Door"));
 			isOpen = !isOpen;
 			PanelDoor->ToggleDoor();
+
+		
 			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_ButtonPush);
+			//PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
+			//FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 0.f));
+			//PlayerCharacter->SetActorRotation(QuatRotation);
+			//if (GetWorld()->GetFirstPlayerController()) {
+			//	FQuat QuatRotation = FQuat(FRotator(0.f, 180.f, 0.f));
+			//	GetWorld()->GetFirstPlayerController()->SetControlRotation(QuatRotation);
+
+			//}
+			//PlayerCharacter.
 		}
 
 		else {
@@ -64,34 +69,35 @@ void ADoorPanel::OnInteract()
 	}
 	else {
 		//Door is locked
+		UE_LOG(LogTemp, Warning, TEXT("Regular door is locked!"));
 
 		//if the door is an elevator door
-		if (IsElevatorPanel) {
+		//if (IsElevatorPanel) {
 	
-			//Check if the player has the key
+		//	//Check if the player has the key
 
-			if (PlayerCharacter->bHasKey) {
-				//if has key is true and the door is still locked it means we need to 
-				//play unlock door hand animation
-				//update the lock panel mterial to green.
+		//	if (PlayerCharacter->bHasKey) {
+		//		//if has key is true and the door is still locked it means we need to 
+		//		//play unlock door hand animation
+		//		//update the lock panel mterial to green.
 
-				IsLocked = false;
-				UpdateMaterial(IsLocked);
-				UE_LOG(LogTemp, Warning, TEXT("player just unlocked the elevator"));
+		//		IsLocked = false;
+		//		UpdateMaterial(IsLocked);
+		//		UE_LOG(LogTemp, Warning, TEXT("player just unlocked the elevator"));
 
-			}
-			else {
-				//if has key is false play button push animation with no change. 
-				UE_LOG(LogTemp, Warning, TEXT("player doesnt have the key to open elevator"));
+		//	}
+		//	else {
+		//		//if has key is false play button push animation with no change. 
+		//		UE_LOG(LogTemp, Warning, TEXT("player doesnt have the key to open elevator"));
 
-			}
-		}
-		else {
-		UE_LOG(LogTemp, Warning, TEXT("Regular door is locked!"));
-		//It is a regular door panel which is locked. 
-		//Play the button push animation. 
-		//Play negative audio.
-		}
+		//	}
+		//}
+		//else {
+		//UE_LOG(LogTemp, Warning, TEXT("Regular door is locked!"));
+		////It is a regular door panel which is locked. 
+		////Play the button push animation. 
+		////Play negative audio.
+		//}
 	}
 
 }

@@ -195,11 +195,12 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 	//Hide arms at all times and use pawn rotation for looking.
 	//On interaction...
 	//Get player character and move it to set position.
+
 	//Show the hands mesh...
-	//Change mouse rotation from player to animation
-	//Then play push button animation one time.
 	Mesh1P->SetHiddenInGame(false);
+	//Change mouse rotation from player to animation
 	FirstPersonCameraComponent->bUsePawnControlRotation = false;
+	//Then play push button animation one time.
 	PlayerAnimationState = NewAnimationState;
 }
 

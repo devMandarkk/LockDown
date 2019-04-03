@@ -28,14 +28,17 @@ public:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* btnMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* AnimationPositionPointer;
+
 	UPROPERTY(EditAnywhere)
 	bool isOpen;
 
 	UPROPERTY(EditAnywhere)
 	bool IsLocked;
 
-	UPROPERTY(EditAnywhere)
-	bool IsElevatorPanel;
+	//UPROPERTY(EditAnywhere)
+	//bool IsElevatorPanel;
 
 	UPROPERTY(EditAnywhere)
 	class ABaseDoorClass * PanelDoor;
