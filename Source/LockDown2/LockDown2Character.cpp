@@ -335,7 +335,7 @@ void ALockDown2Character::MoveForward(float Value)
 		{
 			// add movement in that direction
 			AddMovementInput(GetActorForwardVector(), Value);
-			UE_LOG(LogTemp, Warning, TEXT("movement button pressed"));
+			//UE_LOG(LogTemp, Warning, TEXT("movement button pressed"));
 
 		}
 	}
