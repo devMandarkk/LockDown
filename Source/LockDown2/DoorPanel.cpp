@@ -49,14 +49,17 @@ void ADoorPanel::OnInteract()
 			//UE_LOG(LogTemp, Warning, TEXT("Time To Toggle Door"));
 			isOpen = !isOpen;
 			PanelDoor->ToggleDoor();
-/*
+
 			if (GetWorld()->GetFirstPlayerController()) {
 				FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 0.f));
-				GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(0.f, 171.f, 0.f));
-
+				FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
+				//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
+				if (AnimationRotateDirection) {
+					GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, AnimationRotateDirection, CurrentRotation.Roll));
+				}
 			}
-			PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());*/
-
+			PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
+			
 			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_ButtonPush);
 
 		/*	FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 180.f));

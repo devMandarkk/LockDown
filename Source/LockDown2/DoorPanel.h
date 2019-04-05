@@ -46,6 +46,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	class ALockDown2Character * PlayerCharacter;
 
+	UPROPERTY(EditAnywhere)
+	float AnimationRotateDirection;
+
 	virtual void OnInteract() override;
 	void UnlockDoor();
 

@@ -210,12 +210,16 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 	FirstPersonCameraComponent->bUsePawnControlRotation = false;
 	//Then play push button animation one time.
 	PlayerAnimationState = NewAnimationState;
+
+	bCanMove = false;
 }
 
 void ALockDown2Character::ResetAnimationAndMeshParameters()
 {
 	Mesh1P->SetHiddenInGame(true);
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
+
+	bCanMove = true;
 }
 bool ALockDown2Character::PutBack()
 {
@@ -352,13 +356,13 @@ void ALockDown2Character::MoveRight(float Value)
 
 void ALockDown2Character::TurnAtRate(float Rate)
 {
-	// calculate delta for this frame from the rate information
-	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+		// calculate delta for this frame from the rate information
+		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void ALockDown2Character::LookUpAtRate(float Rate)
 {
-	// calculate delta for this frame from the rate information
-	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+		// calculate delta for this frame from the rate information
+		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
