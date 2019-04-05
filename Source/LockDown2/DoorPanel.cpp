@@ -50,16 +50,18 @@ void ADoorPanel::OnInteract()
 			isOpen = !isOpen;
 			PanelDoor->ToggleDoor();
 
-		
-			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_ButtonPush);
-			//PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
-			//FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 0.f));
-			//PlayerCharacter->SetActorRotation(QuatRotation);
-			//if (GetWorld()->GetFirstPlayerController()) {
-			//	FQuat QuatRotation = FQuat(FRotator(0.f, 180.f, 0.f));
-			//	GetWorld()->GetFirstPlayerController()->SetControlRotation(QuatRotation);
+			if (GetWorld()->GetFirstPlayerController()) {
+				FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 0.f));
+				GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(0.f, 171.f, 0.f));
 
-			//}
+			}
+			PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
+
+			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_ButtonPush);
+
+		/*	FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 180.f));
+			PlayerCharacter->SetActorRotation(QuatRotation);*/
+	
 			//PlayerCharacter.
 		}
 
