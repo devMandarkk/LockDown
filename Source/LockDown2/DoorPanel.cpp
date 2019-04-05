@@ -56,6 +56,8 @@ void ADoorPanel::OnInteract()
 				//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
 				if (AnimationRotateDirection) {
 					GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, AnimationRotateDirection, CurrentRotation.Roll));
+					//GetWorld()->GetFirstPlayerController()
+					DisableInput(GetWorld()->GetFirstPlayerController());
 				}
 			}
 			PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());

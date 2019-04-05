@@ -208,18 +208,18 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 	Mesh1P->SetHiddenInGame(false);
 	//Change mouse rotation from player to animation
 	FirstPersonCameraComponent->bUsePawnControlRotation = false;
+	
 	//Then play push button animation one time.
 	PlayerAnimationState = NewAnimationState;
 
-	bCanMove = false;
+	bInteractingTerminal = true;
 }
 
 void ALockDown2Character::ResetAnimationAndMeshParameters()
 {
 	Mesh1P->SetHiddenInGame(true);
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
-
-	bCanMove = true;
+	bInteractingTerminal = false;
 }
 bool ALockDown2Character::PutBack()
 {
@@ -338,8 +338,9 @@ void ALockDown2Character::MoveForward(float Value)
 			//UE_LOG(LogTemp, Warning, TEXT("movement button pressed"));
 
 		}
+		
 	}
-
+	
 }
 
 void ALockDown2Character::MoveRight(float Value)
@@ -356,13 +357,17 @@ void ALockDown2Character::MoveRight(float Value)
 
 void ALockDown2Character::TurnAtRate(float Rate)
 {
-		// calculate delta for this frame from the rate information
-		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	//if (!bInteractingTerminal) {
+	//	// calculate delta for this frame from the rate information
+	//	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	//}
 }
 
 void ALockDown2Character::LookUpAtRate(float Rate)
 {
-		// calculate delta for this frame from the rate information
-		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	//if (!bInteractingTerminal) {
+	//	// calculate delta for this frame from the rate information
+	//	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	//}
 }
 
