@@ -104,6 +104,14 @@ void ALockDown2Character::Tick(float DeltaSeconds)
 		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams, DefaultResponseParam)) {
 			if (Hit.GetActor()->GetClass()->IsChildOf(AWorldInteractable::StaticClass())) {
 				
+				//if the new hit world interactable is different from the previous one... 
+				//turn of the previous one before turning on the other one. 
+				if (CurrentHoveredItem) {
+					if (CurrentHoveredItem != Cast<AWorldInteractable>(Hit.GetActor())) {
+						CurrentHoveredItem->OnHoverOff();
+					}
+				}
+				
 				CurrentHoveredItem = Cast<AWorldInteractable>(Hit.GetActor());
 				CurrentSelectedItem = CurrentHoveredItem->ItemName;
 				CurrentHoveredItem->OnHoverOver();
