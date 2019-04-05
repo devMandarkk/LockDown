@@ -68,7 +68,7 @@ ALockDown2Character::ALockDown2Character()
 	bCanMove = true;
 	bInspecting = false;
 	bHasKey = false;
-	UPROPERTY(BlueprintReadWrite)
+	//UPROPERTY(BlueprintReadWrite)
 	bInteractingTerminal = 0;
 
 	PlayerAnimationState = EPlayerState::PS_Idle;
@@ -318,23 +318,27 @@ void ALockDown2Character::SetupPlayerInputComponent(class UInputComponent* Playe
 
 void ALockDown2Character::MoveForward(float Value)
 {
-	if (Value != 0.0f && bCanMove)
-	{
-		// add movement in that direction
-		AddMovementInput(GetActorForwardVector(), Value);
-		UE_LOG(LogTemp, Warning, TEXT("movement button pressed"));
+	if (!bInteractingTerminal) {
+		if (Value != 0.0f && bCanMove)
+		{
+			// add movement in that direction
+			AddMovementInput(GetActorForwardVector(), Value);
+			UE_LOG(LogTemp, Warning, TEXT("movement button pressed"));
 
+		}
 	}
-
 
 }
 
 void ALockDown2Character::MoveRight(float Value)
 {
-	if (Value != 0.0f && bCanMove)
-	{
-		// add movement in that direction
-		AddMovementInput(GetActorRightVector(), Value);
+	if (!bInteractingTerminal) {
+
+		if (Value != 0.0f && bCanMove)
+		{
+			// add movement in that direction
+			AddMovementInput(GetActorRightVector(), Value);
+		}
 	}
 }
 

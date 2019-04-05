@@ -84,6 +84,11 @@ void ADoorLockPanel::CameraToggle()
 
 			// Cut instantly to camera one.
 			OurPlayerController->SetViewTargetWithBlend(PlayerCamera, SmoothBlendTime);
+
+			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (PlayerCharacter) {
+				PlayerCharacter->bInteractingTerminal = 0;
+			}
 		}
 		else if ((OurPlayerController->GetViewTarget() != this) && (this != nullptr) && bSwitchCamera)
 		{
@@ -91,6 +96,10 @@ void ADoorLockPanel::CameraToggle()
 
 			// Blend smoothly to camera two.
 			OurPlayerController->SetViewTargetWithBlend(this, SmoothBlendTime);
+			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			if (PlayerCharacter) {
+				PlayerCharacter->bInteractingTerminal = 1;
+			}
 		}
 	}
 }
