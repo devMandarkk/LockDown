@@ -10,6 +10,9 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FToggleLockerDoor);
+
 UCLASS()
 class LOCKDOWN2_API ALocker : public AWorldInteractable
 {
@@ -22,6 +25,9 @@ public:
 		UStaticMeshComponent* mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* AnimationPositionPointer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* LockerNumMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -29,6 +35,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	class ALockDown2Character * PlayerCharacter;
+
+	UPROPERTY(BlueprintAssignable)
+		FToggleLockerDoor ToggleDoorRequest;
 
 	virtual void OnInteract() override;
 	virtual void BeginPlay() override;

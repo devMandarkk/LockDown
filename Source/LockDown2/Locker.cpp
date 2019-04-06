@@ -6,13 +6,16 @@
 
 ALocker::ALocker() {
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
-	mesh->SetupAttachment(SceneComponent);
+	mesh->SetupAttachment(boxTrigger);
 
 	LockerNumMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LockerNumMesh"));
 	LockerNumMesh->SetupAttachment(mesh);
 
 	LockerDoorLockMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LockerDoorLockMesh"));
 	LockerDoorLockMesh->SetupAttachment(mesh);
+
+	AnimationPositionPointer = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AnimationPositionPointer"));
+	AnimationPositionPointer->SetupAttachment(mesh);
 
 }
 
@@ -28,6 +31,8 @@ void ALocker::OnInteract()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Time To Open Locker"));
 
-	PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKey);
+	PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
 
+	PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKey);
+	ToggleDoorRequest.Broadcast();
 }
