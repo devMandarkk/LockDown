@@ -70,7 +70,7 @@ ALockDown2Character::ALockDown2Character()
 	bHasKey = false;
 	//UPROPERTY(BlueprintReadWrite)
 	bInteractingTerminal = 0;
-
+	bStopMouseRotation = false;
 	PlayerAnimationState = EPlayerState::PS_Idle;
 }
 
@@ -213,6 +213,8 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 	PlayerAnimationState = NewAnimationState;
 
 	bInteractingTerminal = true;
+	bStopMouseRotation = true;
+
 }
 
 void ALockDown2Character::ResetAnimationAndMeshParameters()
@@ -220,6 +222,8 @@ void ALockDown2Character::ResetAnimationAndMeshParameters()
 	Mesh1P->SetHiddenInGame(true);
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 	bInteractingTerminal = false;
+	bStopMouseRotation = false;
+
 }
 bool ALockDown2Character::PutBack()
 {
@@ -314,10 +318,10 @@ void ALockDown2Character::SetupPlayerInputComponent(class UInputComponent* Playe
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &ALockDown2Character::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &ALockDown2Character::LookUpAtRate);
+	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	//PlayerInputComponent->BindAxis("TurnRate", this, &ALockDown2Character::TurnAtRate);
+	//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	//PlayerInputComponent->BindAxis("LookUpRate", this, &ALockDown2Character::LookUpAtRate);
 
 	//Examinable binds.
 	PlayerInputComponent->BindAction("Action", IE_Pressed, this, &ALockDown2Character::OnAction);

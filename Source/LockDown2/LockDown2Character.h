@@ -69,6 +69,9 @@ public:
 	int32 bInteractingTerminal; // this will be used later in BPS
 	bool bHasKey;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	bool bStopMouseRotation; //this is used in bps
+
 	float PitchMax;
 	float PitchMin;
 
