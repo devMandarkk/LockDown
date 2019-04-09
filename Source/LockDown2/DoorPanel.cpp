@@ -60,8 +60,11 @@ void ADoorPanel::OnInteract()
 					DisableInput(GetWorld()->GetFirstPlayerController());
 				}
 			}
+			//FMath::Lerp(FirstPersonCameraComponent->FieldOfView, AnimationPositionPointer->GetComponentLocation(), 0.1f)
 			PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
-			
+			//FMath::Lerp
+			//PlayerCharacter->SetActorLocation(FMath::Lerp(PlayerCharacter->GetActorLocation(), AnimationPositionPointer->GetComponentLocation(), 0.5f));
+
 			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_ButtonPush);
 
 		/*	FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 180.f));
