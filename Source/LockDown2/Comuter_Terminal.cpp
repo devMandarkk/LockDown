@@ -41,6 +41,8 @@ void AComuter_Terminal::CameraToggle()
 			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (PlayerCharacter) {
 				PlayerCharacter->bInteractingTerminal = 0;
+				PlayerCharacter->bStopMouseRotation = false;
+
 			}
 			// Cut instantly to camera one.
 			OurPlayerController->SetViewTargetWithBlend(PlayerCamera, SmoothBlendTime);
@@ -51,6 +53,7 @@ void AComuter_Terminal::CameraToggle()
 			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (PlayerCharacter) {
 				PlayerCharacter->bInteractingTerminal = 1;
+				PlayerCharacter->bStopMouseRotation = true;
 			}
 			// Blend smoothly to camera two.
 			OurPlayerController->SetViewTargetWithBlend(this, SmoothBlendTime);

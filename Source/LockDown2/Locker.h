@@ -39,6 +39,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FToggleLockerDoor ToggleDoorRequest;
 
+
+	UPROPERTY(EditAnywhere)
+		float AnimationRotateDirection;
+
 	virtual void OnInteract() override;
 	virtual void BeginPlay() override;
 

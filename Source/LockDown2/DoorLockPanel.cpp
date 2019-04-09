@@ -88,6 +88,7 @@ void ADoorLockPanel::CameraToggle()
 			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (PlayerCharacter) {
 				PlayerCharacter->bInteractingTerminal = 0;
+				PlayerCharacter->bStopMouseRotation = false;
 			}
 		}
 		else if ((OurPlayerController->GetViewTarget() != this) && (this != nullptr) && bSwitchCamera)
@@ -99,6 +100,7 @@ void ADoorLockPanel::CameraToggle()
 			ALockDown2Character * PlayerCharacter = Cast<ALockDown2Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 			if (PlayerCharacter) {
 				PlayerCharacter->bInteractingTerminal = 1;
+				PlayerCharacter->bStopMouseRotation = true;
 			}
 		}
 	}

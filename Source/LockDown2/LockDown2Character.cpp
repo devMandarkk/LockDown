@@ -207,7 +207,7 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 	//Show the hands mesh...
 	Mesh1P->SetHiddenInGame(false);
 	//Change mouse rotation from player to animation
-	FirstPersonCameraComponent->bUsePawnControlRotation = false;
+	//FirstPersonCameraComponent->bUsePawnControlRotation = false;
 	
 	//Then play push button animation one time.
 	PlayerAnimationState = NewAnimationState;
@@ -220,7 +220,7 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 void ALockDown2Character::ResetAnimationAndMeshParameters()
 {
 	Mesh1P->SetHiddenInGame(true);
-	FirstPersonCameraComponent->bUsePawnControlRotation = true;
+	//FirstPersonCameraComponent->bUsePawnControlRotation = true;
 	bInteractingTerminal = false;
 	bStopMouseRotation = false;
 

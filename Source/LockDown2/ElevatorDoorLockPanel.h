@@ -29,6 +29,13 @@ public:
 
 	virtual void OnInteract() override;
 
+	//animation things
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* AnimationPositionPointer;
+
+	UPROPERTY(EditAnywhere)
+		float AnimationRotateDirection;
 
 protected:
 	// Called when the game starts or when spawned
