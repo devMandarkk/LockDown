@@ -29,20 +29,26 @@ void ALocker::BeginPlay()
 }
 void ALocker::OnInteract()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Time To Open Locker"));
+	if(PlayerCharacter->bHasLockerKey){
+		UE_LOG(LogTemp, Warning, TEXT("Time To Open Locker"));
 
-	FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
-	//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
-	if (AnimationRotateDirection) {
-
+		FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
+		//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
 		if (AnimationRotateDirection) {
-			GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, AnimationRotateDirection, CurrentRotation.Roll));
-			//GetWorld()->GetFirstPlayerController()
-			DisableInput(GetWorld()->GetFirstPlayerController());
-		}
-	}
-	PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
 
-	PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKey);
-	//ToggleDoorRequest.Broadcast();
+			if (AnimationRotateDirection) {
+				GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, AnimationRotateDirection, CurrentRotation.Roll));
+				//GetWorld()->GetFirstPlayerController()
+				DisableInput(GetWorld()->GetFirstPlayerController());
+			}
+		}
+		PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
+
+		PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKey);
+		//ToggleDoorRequest.Broadcast();
+	}
+	else {
+		//on locker key
+	}
+
 }

@@ -67,7 +67,8 @@ ALockDown2Character::ALockDown2Character()
 
 	bCanMove = true;
 	bInspecting = false;
-	bHasKey = false;
+	bHasKey = false; //elevator door key
+	bHasLockerKey = false;
 	//UPROPERTY(BlueprintReadWrite)
 	bInteractingTerminal = 0;
 	bStopMouseRotation = false;
