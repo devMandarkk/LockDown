@@ -39,6 +39,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FToggleLockerDoor ToggleDoorRequest;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float DoorOpenDelay;
+
+	bool bIsLockerOpen;
 
 	UPROPERTY(EditAnywhere)
 		float AnimationRotateDirection;

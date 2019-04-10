@@ -17,6 +17,8 @@ ALocker::ALocker() {
 	AnimationPositionPointer = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AnimationPositionPointer"));
 	AnimationPositionPointer->SetupAttachment(mesh);
 
+	DoorOpenDelay = 0.0f;
+	bIsLockerOpen = false;
 }
 
 
@@ -29,26 +31,33 @@ void ALocker::BeginPlay()
 }
 void ALocker::OnInteract()
 {
-	if(PlayerCharacter->bHasLockerKey){
-		UE_LOG(LogTemp, Warning, TEXT("Time To Open Locker"));
+	if (!bIsLockerOpen) {
 
-		FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
-		//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
-		if (AnimationRotateDirection) {
+		if (PlayerCharacter->bHasLockerKey) {
+			UE_LOG(LogTemp, Warning, TEXT("Time To Open Locker"));
 
+			FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
+			//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
 			if (AnimationRotateDirection) {
-				GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, AnimationRotateDirection, CurrentRotation.Roll));
-				//GetWorld()->GetFirstPlayerController()
-				DisableInput(GetWorld()->GetFirstPlayerController());
-			}
-		}
-		PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
 
-		PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKey);
-		//ToggleDoorRequest.Broadcast();
-	}
-	else {
-		//on locker key
+				if (AnimationRotateDirection) {
+					GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, AnimationRotateDirection, CurrentRotation.Roll));
+					//GetWorld()->GetFirstPlayerController()
+					DisableInput(GetWorld()->GetFirstPlayerController());
+				}
+			}
+			PlayerCharacter->SetActorLocation(AnimationPositionPointer->GetComponentLocation());
+
+			PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKey);
+			ToggleDoorRequest.Broadcast();
+			//mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			bIsLockerOpen = true;
+
+		}
+		else {
+			//on locker key
+		}
+
 	}
 
 }
