@@ -14,6 +14,12 @@ ALocker::ALocker() {
 	LockerDoorLockMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LockerDoorLockMesh"));
 	LockerDoorLockMesh->SetupAttachment(mesh);
 
+	LockerDoorLockMeshInside = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LockerDoorLockMeshInside"));
+	LockerDoorLockMeshInside->SetupAttachment(LockerDoorLockMesh);
+
+	LockerDoorLockMeshHandle = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LockerDoorLockMeshHandle"));
+	LockerDoorLockMeshHandle->SetupAttachment(mesh);
+
 	AnimationPositionPointer = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AnimationPositionPointer"));
 	AnimationPositionPointer->SetupAttachment(mesh);
 

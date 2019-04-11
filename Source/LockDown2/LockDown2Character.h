@@ -12,7 +12,9 @@ enum class EPlayerState : uint8
 	PS_Idle 	UMETA(DisplayName = "Idle"),
 	PS_ButtonPush 	UMETA(DisplayName = "ButtonPush"),
 	PS_ElevatorSwipe UMETA(DisplayName = "ElevatorSwipe"),
-	PS_LockerKey	UMETA(DisplayName = "LockerKey"),
+	PS_LockerKey	UMETA(DisplayName = "LockerKey"), 
+	PS_WakeUp	UMETA(DisplayName = "WakeUp"),
+	PS_GetUp	UMETA(DisplayName = "GetUp")
 };
 
 class UInputComponent;

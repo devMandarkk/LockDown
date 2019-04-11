@@ -33,6 +33,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* LockerDoorLockMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* LockerDoorLockMeshInside;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* LockerDoorLockMeshHandle;
+
+
 	UPROPERTY(EditAnywhere)
 	class ALockDown2Character * PlayerCharacter;
 

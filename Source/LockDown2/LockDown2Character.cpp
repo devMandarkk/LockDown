@@ -71,8 +71,8 @@ ALockDown2Character::ALockDown2Character()
 	bHasLockerKey = false;
 	//UPROPERTY(BlueprintReadWrite)
 	bInteractingTerminal = 0;
-	bStopMouseRotation = false;
-	PlayerAnimationState = EPlayerState::PS_Idle;
+	bStopMouseRotation = true; //in wake up animation and get up animation currently mouse rotation is stopped
+	PlayerAnimationState = EPlayerState::PS_WakeUp;
 }
 
 void ALockDown2Character::BeginPlay()
@@ -225,6 +225,9 @@ void ALockDown2Character::ResetAnimationAndMeshParameters()
 	bInteractingTerminal = false;
 	bStopMouseRotation = false;
 
+	if (PlayerAnimationState == EPlayerState::PS_Idle) {
+		FirstPersonCameraComponent->bUsePawnControlRotation = true;
+	}
 }
 bool ALockDown2Character::PutBack()
 {
@@ -240,16 +243,24 @@ bool ALockDown2Character::PutBack()
 void ALockDown2Character::OnAction()
 {
 
-	if (CurrentItem && !bInspecting) {
-		ToggleItemPickup();
+	//if the game has just started then the action key will just transition from wake up state to transition state
+	if (PlayerAnimationState == EPlayerState::PS_WakeUp) {
+		//PlayerAnimationState = EPlayerState::PS_GetUp;
+		UpdateAnimationState(EPlayerState::PS_GetUp);
+	}
+	else {
+		if (CurrentItem && !bInspecting) {
+			ToggleItemPickup();
+
+		}
+		else if (WorldInteractable && !bInspecting) {
+			WorldInteractable->OnInteract();
+		}
+		//if (drinkMachine && !bInspecting) {
+		//	drinkMachine->OnInteract();
+		//}
 
 	}
-	else if (WorldInteractable && !bInspecting) {
-		WorldInteractable->OnInteract();
-	}
-	//if (drinkMachine && !bInspecting) {
-	//	drinkMachine->OnInteract();
-	//}
 
 }
 
