@@ -16,5 +16,10 @@ void ALockerKey::OnInteract()
 	if (PlayerCharacter) {
 		PlayerCharacter->bHasLockerKey = true;
 	}
+	//Update player animation state here and play animation
+	//PlayerCharacter->PlayerAnimationState = EPlayerState::PS_LockerKeyPickUp;
+	//PlayerCharacter->UpdateAnimationState(EPlayerState::PS_LockerKeyPickUp);
+	//Also add delay here. 
+	//Also add sockey in animation for the key...
 	this->Destroy();
 }

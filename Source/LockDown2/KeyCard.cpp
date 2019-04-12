@@ -20,6 +20,20 @@ void AKeyCard::OnInteract()
 	if(PlayerCharacter){
 		PlayerCharacter->bHasKey = true;
 	}
+	//Update player animation state here and play animation
+	/*FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
+	GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, CurrentRotation.Yaw, CurrentRotation.Roll));
+*/
+
+	//PlayerCharacter->UpdateAnimationState(EPlayerState::PS_KeyCardPickUp);
+	//FRotator test = FRotator(0.f, 0.f, 0.f);
+	//PlayerCharacter->FirstPersonCameraComponent->RelativeRotation += FRotator(0, 0, 25.f);
+	
+
+	/*	FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 180.f));
+		PlayerCharacter->SetActorRotation(QuatRotation);*/
+
+
 	this->Destroy();
 
 }

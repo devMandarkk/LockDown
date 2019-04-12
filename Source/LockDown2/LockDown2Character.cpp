@@ -216,6 +216,12 @@ void ALockDown2Character::UpdateAnimationState(EPlayerState NewAnimationState)
 	bInteractingTerminal = true;
 	bStopMouseRotation = true;
 
+	if (PlayerAnimationState == EPlayerState::PS_KeyCardPickUp || PlayerAnimationState == EPlayerState::PS_KeyCardPickUp) {
+		bInteractingTerminal = false;
+		bStopMouseRotation = false;
+
+	}
+
 }
 
 void ALockDown2Character::ResetAnimationAndMeshParameters()
@@ -319,8 +325,8 @@ void ALockDown2Character::SetupPlayerInputComponent(class UInputComponent* Playe
 	check(PlayerInputComponent);
 
 	// Bind jump events
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	//PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 
 	// Bind movement events

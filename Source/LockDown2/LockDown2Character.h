@@ -14,7 +14,9 @@ enum class EPlayerState : uint8
 	PS_ElevatorSwipe UMETA(DisplayName = "ElevatorSwipe"),
 	PS_LockerKey	UMETA(DisplayName = "LockerKey"), 
 	PS_WakeUp	UMETA(DisplayName = "WakeUp"),
-	PS_GetUp	UMETA(DisplayName = "GetUp")
+	PS_GetUp	UMETA(DisplayName = "GetUp"), 
+	PS_LockerKeyPickUp	UMETA(DisplayName = "LockerKeyPickUp"),
+	PS_KeyCardPickUp	UMETA(DisplayName = "KeyCardPickUp"),
 };
 
 class UInputComponent;

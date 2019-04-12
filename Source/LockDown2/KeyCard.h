@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "WorldInteractable.h"
+#include "Camera/CameraComponent.h"
 #include "KeyCard.generated.h"
 
 /**
@@ -19,6 +20,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* KeyCardMesh;
+
+	UPROPERTY(EditAnywhere)
+		AActor * PlayerCamera;
 
 	virtual void OnInteract() override;
 
