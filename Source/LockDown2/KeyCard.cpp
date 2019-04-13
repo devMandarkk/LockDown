@@ -25,7 +25,7 @@ void AKeyCard::OnInteract()
 	GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Pitch, CurrentRotation.Yaw, CurrentRotation.Roll));
 */
 
-	//PlayerCharacter->UpdateAnimationState(EPlayerState::PS_KeyCardPickUp);
+	PlayerCharacter->UpdateAnimationState(EPlayerState::PS_KeyCardPickUp);
 	//FRotator test = FRotator(0.f, 0.f, 0.f);
 	//PlayerCharacter->FirstPersonCameraComponent->RelativeRotation += FRotator(0, 0, 25.f);
 	
