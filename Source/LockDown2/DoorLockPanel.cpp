@@ -2,6 +2,7 @@
 
 #include "DoorLockPanel.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 
 ADoorLockPanel::ADoorLockPanel() {
@@ -19,7 +20,7 @@ ADoorLockPanel::ADoorLockPanel() {
 
 	bSwitchCamera = false;
 	//InputText->SetText(displayPassword);
-
+	bAllowInput = true;
 }
 
 void ADoorLockPanel::BeginPlay()
@@ -135,6 +136,11 @@ void ADoorLockPanel::UpdateUIAndCheckPassword()
 			currentPassword = "";
 			displayPassword = "";
 			inputNumCount = 0;
+
+			//Show green color
+			mesh->SetMaterial(3, lockMaterialGreen);
+			//Stop any further input
+			bAllowInput = false;
 		}
 		else {
 			UE_LOG(LogTemp, Warning, TEXT("password wrong"));
@@ -143,6 +149,17 @@ void ADoorLockPanel::UpdateUIAndCheckPassword()
 			currentPassword = "";
 			displayPassword = "";
 			inputNumCount = 0;
+
+
+			//Show red color
+			mesh->SetMaterial(3, lockMaterialRed);
+			InputText->SetText("DENIED");
+			//Stop any further input 
+			bAllowInput = false;
+			//Play a function 1 second later which changes color back, text to zero, and allows input
+			GetWorldTimerManager().SetTimer(MemberTimerHandle, this, &ADoorLockPanel::ResetOnFailure, 2.0f, true);
+
+
 		}
 	}
 	else {
@@ -152,66 +169,96 @@ void ADoorLockPanel::UpdateUIAndCheckPassword()
 
 }
 
+void ADoorLockPanel::ResetOnFailure()
+{
+	//Play a function 1 second later which changes color back, text to zero, and allows input
+	UE_LOG(LogTemp, Warning, TEXT("Time to change color to yellow"));
+	//Stop the timer from repeating
+	GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
+	mesh->SetMaterial(3, lockMaterialYellow);
+	InputText->SetText("_ _ _ _");
+	bAllowInput = true;
+	
+}
+
 void ADoorLockPanel::OnOnePressed()
 {
-	inputNumCount++;
-	currentPassword += "1";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "1";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnTwoPressed()
 {
-	inputNumCount++;
-	currentPassword += "2";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "2";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnThreePressed()
 {
-	inputNumCount++;
-	currentPassword += "3";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "3";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnFourPressed()
 {
-	inputNumCount++;
-	currentPassword += "4";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "4";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnFivePressed()
 {
-	inputNumCount++;
-	currentPassword += "5";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "5";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnSixPressed()
 {
-	inputNumCount++;
-	currentPassword += "6";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "6";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnSevenPressed()
 {
-	inputNumCount++;
-	currentPassword += "7";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "7";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnEightPressed()
 {
-	inputNumCount++;
-	currentPassword += "8";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "8";
+		UpdateUIAndCheckPassword();
+	}
 }
 
 void ADoorLockPanel::OnNinePressed()
 {
-	inputNumCount++;
-	currentPassword += "9";
-	UpdateUIAndCheckPassword();
+	if (bAllowInput) {
+		inputNumCount++;
+		currentPassword += "9";
+		UpdateUIAndCheckPassword();
+	}
 }
 

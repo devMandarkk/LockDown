@@ -38,10 +38,22 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FToggleCamera ToggleCamera;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UMaterialInterface * lockMaterialGreen;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UMaterialInterface * lockMaterialRed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UMaterialInterface * lockMaterialYellow;
+
+	FTimerHandle MemberTimerHandle;
+
 	UPROPERTY(EditAnywhere)
 	AActor* PlayerCamera;
 
 	bool bSwitchCamera;
+	bool bAllowInput;
 
 	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 
@@ -56,6 +68,7 @@ public:
 	virtual void OnInteract() override;
 
 	void UpdateUIAndCheckPassword();
+	void ResetOnFailure();
 
 	//Input handling functions
 	void OnOnePressed();
