@@ -3,6 +3,8 @@
 #include "DoorPanel.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
+
 
 
 ADoorPanel::ADoorPanel()
@@ -21,6 +23,7 @@ ADoorPanel::ADoorPanel()
 	//name = "Door Panel";
 	//isOpen = false;
 	//isOpen = false;
+	DoorSoundDelay = 1.0f;
 }
 
 void ADoorPanel::BeginPlay()
@@ -50,7 +53,11 @@ void ADoorPanel::OnInteract()
 			isOpen = !isOpen;
 			PanelDoor->ToggleDoor();
 
+			//Add the sound cue for door open/close
+			GetWorldTimerManager().SetTimer(SoundTimerHandle, this, &ADoorPanel::PlaySound, DoorSoundDelay, true);
+
 			if (GetWorld()->GetFirstPlayerController()) {
+
 				FQuat QuatRotation = FQuat(FRotator(0.f, 0.f, 0.f));
 				FRotator CurrentRotation = GetWorld()->GetFirstPlayerController()->GetControlRotation();
 				//GetWorld()->GetFirstPlayerController()->SetControlRotation(FRotator(CurrentRotation.Roll, 179.f, CurrentRotation.Pitch));
@@ -112,6 +119,13 @@ void ADoorPanel::OnInteract()
 
 }
 
+void ADoorPanel::PlaySound() {
+	if (DoorSound) {
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), DoorSound, GetActorLocation(), 1.0f, 1.0f, .0f);
+	}
+	GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
+
+}
 
 void ADoorPanel::UpdateMaterial(bool IsLocked)
 {

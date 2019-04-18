@@ -31,6 +31,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* AnimationPositionPointer;
 
+	UPROPERTY(EditAnywhere, Category = Sound)
+	USoundBase * DoorSound;
+
+	FTimerHandle SoundTimerHandle;
+
+	void PlaySound();
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+	float DoorSoundDelay;
+
 	UPROPERTY(EditAnywhere)
 	bool isOpen;
 
