@@ -84,6 +84,32 @@ public:
 	UFUNCTION()
 	void CameraToggle();
 
+	//Sound related things below:
+	//Sound that I need:
+/*
+- key pad input sound
+- key pad failure sound
+- key pad success sound
+*/
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+	USoundBase * InputDigitSound;
+	UPROPERTY(EditAnywhere, Category = Sound)
+	USoundBase * PasswordFailureSound;
+	UPROPERTY(EditAnywhere, Category = Sound)
+	USoundBase * PasswordSuccessSound;
+
+	FTimerHandle SoundTimerHandle();
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+		float InputDigitSoundDelay;
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+		float PasswordFailureSoundDelay;
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+		float PasswordSuccessSoundDelay;
+
 protected:
 	virtual void BeginPlay() override;
 

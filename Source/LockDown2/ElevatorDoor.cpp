@@ -15,6 +15,8 @@ AElevatorDoor::AElevatorDoor()
 
 void AElevatorDoor::ToggleDoor()
 {
+	Super::ToggleDoor();
+
 	UE_LOG(LogTemp, Warning, TEXT("Time to toggle elevator room door"));
 	ToggleDoorRequest.Broadcast();
 	IsOpen = !IsOpen;

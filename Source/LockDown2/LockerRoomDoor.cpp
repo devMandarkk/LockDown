@@ -45,6 +45,8 @@ void ALockerRoomDoor::BeginPlay()
 
 void ALockerRoomDoor::ToggleDoor()
 {
+	Super::ToggleDoor();
+
 	ToggleDoorRequest.Broadcast();
 	IsOpen = !IsOpen;
 	UE_LOG(LogTemp, Warning, TEXT("Time to toggle locker room door"));

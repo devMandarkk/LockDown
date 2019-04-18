@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "DoorLockPanel.h"
+#include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
-
 
 ADoorLockPanel::ADoorLockPanel() {
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
@@ -22,6 +22,8 @@ ADoorLockPanel::ADoorLockPanel() {
 	//InputText->SetText(displayPassword);
 	bAllowInput = true;
 }
+
+
 
 void ADoorLockPanel::BeginPlay()
 {
@@ -184,6 +186,7 @@ void ADoorLockPanel::ResetOnFailure()
 void ADoorLockPanel::OnOnePressed()
 {
 	if (bAllowInput) {
+
 		inputNumCount++;
 		currentPassword += "1";
 		UpdateUIAndCheckPassword();
@@ -261,4 +264,3 @@ void ADoorLockPanel::OnNinePressed()
 		UpdateUIAndCheckPassword();
 	}
 }
-

@@ -53,7 +53,7 @@ void ADoorPanel::OnInteract()
 			isOpen = !isOpen;
 			PanelDoor->ToggleDoor();
 
-			//Add the sound cue for door open/close
+			//Add the sound cue for door panel open/close
 			GetWorldTimerManager().SetTimer(SoundTimerHandle, this, &ADoorPanel::PlaySound, DoorSoundDelay, true);
 
 			if (GetWorld()->GetFirstPlayerController()) {

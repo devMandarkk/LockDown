@@ -18,6 +18,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float DoorOpenDelay;
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+	USoundBase * DoorSound;
+
+	FTimerHandle SoundTimerHandle;
+
+	void PlaySound();
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+	float DoorSoundDelay;
+
 	virtual void ToggleDoor();
 
 protected:

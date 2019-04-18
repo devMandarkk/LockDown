@@ -48,6 +48,7 @@ void ARegularDoor::BeginPlay() {
 }
 
 void ARegularDoor::ToggleDoor( ) {
+	Super::ToggleDoor();
 	ToggleDoorRequest.Broadcast();
 
 	IsOpen = !IsOpen;
