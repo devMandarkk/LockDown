@@ -99,7 +99,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = Sound)
 	USoundBase * PasswordSuccessSound;
 
-	FTimerHandle SoundTimerHandle();
+	FTimerHandle SoundTimerHandle;
 
 	UPROPERTY(EditAnywhere, Category = Sound)
 		float InputDigitSoundDelay;
@@ -109,6 +109,10 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Sound)
 		float PasswordSuccessSoundDelay;
+
+	void PlayInputSound();
+	void PlayFailureSound();
+	void PlaySucessSound();
 
 protected:
 	virtual void BeginPlay() override;
